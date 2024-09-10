@@ -26,7 +26,7 @@ pub async fn handle_file_upload(db: Arc<sled::Db>,mut form: FormData) -> Result<
         }
 
         let save_path = PathBuf::from(format!("./{}{}",UPLOAD_DIR, filename));
-        if let Err(_) = tokio::fs::write(save_path, data).await {
+        if (tokio::fs::write(save_path, data).await).is_err() {
             return Ok(StatusCode::INTERNAL_SERVER_ERROR);
         }
     }

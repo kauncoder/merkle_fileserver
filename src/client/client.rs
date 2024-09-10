@@ -48,7 +48,6 @@ fn get_root_hash_from_leaves(leaves: Vec<Hash>) ->FastMerkleNode{
     fn verify_proof(file_name: String, proof: Vec<(Vec<u8>, bool)>, root_hash: Vec<u8>) -> bool {
 
         //convert proof to vector of hashes
-        let proof = proof;
         let filepath = PathBuf::from(file_name);
         if !filepath.exists(){ return false;} 
         let bytes = std::fs::read(filepath.clone()).unwrap();
