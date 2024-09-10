@@ -15,10 +15,16 @@ The merkletree code provides implementation of basic merkle tree functionality
 
 The merkle tree is maintained in a `sled` database.
 
-## 2. Usage
+## 2. Pre-requisites
+
+This only requires `cargo` to work. You can install it from [here](https://www.rust-lang.org/learn/get-started). Some libraries have dependencies like `gcc` so install them as well. In ubuntu this is done using: ```sudo apt update
+sudo apt install build-essential
+sudo apt install gcc
+```
+## 3. Usage
 
 
-### 2.1. Running server
+### 3.1. Running server
 
 From CLI run ```cargo run server``` to start file-server. Then access the functions from browser at ```localhost:8080```
 
@@ -27,14 +33,14 @@ From CLI run ```cargo run server``` to start file-server. Then access the functi
 3. ```localhost:8080/download/<filename>```: to download the file and get its merkle proof
 
 
-### 2.2. Running client
+### 3.2. Running client
 
 From CLI run ```cargo run client``` to start client. Then access the functions from browser at ```localhost:8081```
 
 1. ```localhost:8081/hash```: to select files to get their root hash
 2. ```localhost:8081/verify```: to check the integrity of a selected file 
 
-## 3. Process
+## 4. Process
 
 1. get the root hash for files to be uploaded from `localhost:8081/hash` path. copy the hash value including the square braces like `[....]` and store it somewhere. this is the `root_hash`
 2. upload the files to the server from `localhost:8080/upload`
