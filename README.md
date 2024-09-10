@@ -17,10 +17,12 @@ The merkle tree is maintained in a `sled` database.
 
 ## 2. Pre-requisites
 
-This only requires `cargo` to work. You can install it from [here](https://www.rust-lang.org/learn/get-started). Some libraries have dependencies like `gcc` so install them as well. In ubuntu this is done using: ```sudo apt update
+This only requires `cargo` to work. You can install it from [here](https://www.rust-lang.org/learn/get-started). Some libraries have dependencies like `gcc` so install them as well. In ubuntu this is done using: 
+```sudo apt update
 sudo apt install build-essential
 sudo apt install gcc
 ```
+
 ## 3. Usage
 
 
