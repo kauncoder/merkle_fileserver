@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Download</title>
+</head>
+<body>
+    <h1>List of Files</h1>
+    <ul id="fileList"></ul>
+    <script>
+        async function fetchFiles() {
+            try {
+                const response = await fetch('files');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                //                data.files.forEach(file => {
+
+                for (const file of data) {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `/downloads/${file}`;
+                    link.innerText = file;
+                    link.target = '_blank'; // Optional: Open in a new tab
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '<li>Error fetching file list</li>';
+            }
+        }
+
+        // Fetch files on page load
+        fetchFiles();
+    </script>
+</body>
+</html>

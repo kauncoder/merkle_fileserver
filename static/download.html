@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download File with Hash</title>
+</head>
+<body>
+    <h1>Download File</h1>
+    <button id="downloadBtn">Download File</button>
+    <p id="hashDisplay"></p>
+
+    <script>
+
+
+        document.getElementById("downloadBtn").addEventListener("click", async () => {
+            function getPathSegment(index) {
+            const pathSegments = window.location.pathname.split('/').filter(segment => segment);
+            return pathSegments[index] || '';
+            }
+
+            const filename = getPathSegment(1);
+            try {
+                // Fetch the file and its headers
+                
+
+                // Extract the hash from the 'X-File-Hash' header
+                
+                const merkleproof = await fetchFileHash(filename);
+                
+                if (merkleproof) {
+                    document.getElementById("hashDisplay").textContent = `Merkle Proof: ${merkleproof}`;
+                } else {
+                    document.getElementById("hashDisplay").textContent = 'No file hash found.';
+                }
+
+                const response = await fetch(`../download/${filename}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Convert the file blob and trigger a download
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename; // Download the file
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url); // Clean up the URL
+                a.remove();
+
+            } catch (error) {
+                console.error('Download error:', error);
+            }
+            async function fetchFileHash(filename) {
+            try {
+                const response = await fetch(`/download/${filename}`, { method: 'HEAD' }); // Use HEAD to only fetch headers
+                if (response.ok) {
+                    // Extract the hash from the custom header
+                    return response.headers.get('X-File-Hash');
+                }
+                return null;
+            } catch (error) {
+                console.error(`Error fetching hash for file ${filename}:`, error);
+                return null;
+            }
+        }
+        });
+    </script>
+</body>
+</html>

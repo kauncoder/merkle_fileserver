@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File and String Upload</title>
+</head>
+<body>
+    <h1>Verify File Merkle Proof</h1>
+    
+    <!-- Form to upload a file and two string inputs -->
+    <form id="upload-form" enctype="multipart/form-data" method="POST">
+        <label for="file">Select a file:</label>
+        <input type="file" id="file" name="file" required /><br/><br/>
+
+        <label for="value1">Root Hash:</label>
+        <input type="text" id="value1" name="root hash" required /><br/><br/>
+
+        <label for="value2">Merkle Proof:</label>
+        <input type="text" id="value2" name="merkle proof" required /><br/><br/>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Result:</h2>
+    <pre id="result">Waiting for submission...</pre>
+
+    <script>
+        const form = document.getElementById("upload-form");
+        const resultDisplay = document.getElementById("result");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();  // Prevent default form submission
+
+            const formData = new FormData();
+            formData.append("file", document.getElementById("file").files[0]);
+            formData.append("value1", document.getElementById("value1").value);
+            formData.append("value2", document.getElementById("value2").value);
+
+            try {
+                const response = await fetch("/verifyform", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    resultDisplay.textContent = `File Integrity ${result}`;
+                } else {
+                    resultDisplay.textContent = "Error in submission!";
+                }
+            } catch (error) {
+                resultDisplay.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

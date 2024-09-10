@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Hash Calculator</title>
+</head>
+<body>
+    <h1>Select Files To Get Merkle Root Hash</h1>
+    
+    <!-- Form to upload file -->
+    <form id="file-form" enctype="multipart/form-data" method="POST">
+        <input type="file" id="file-input" name="file" multiple />
+        <button type="submit">Get Hash</button>
+    </form>
+
+    <!-- Display file hash here -->
+    <h2>Root Hash:</h2>
+    <pre id="file-hash">No file uploaded yet.</pre>
+
+    <script>
+        // Get references to the form, input, and hash display elements
+        const form = document.getElementById("file-form");
+        const fileInput = document.getElementById("file-input");
+        const hashDisplay = document.getElementById("file-hash");
+
+        // Handle form submission
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();  // Prevent default form submission behavior
+
+            const formData = new FormData();
+            for (const file of fileInput.files){
+            formData.append('file', file);
+            }
+            try {
+                // Send the file to the server via POST
+                const response = await fetch("/hashform", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                // If the response is successful, extract the hash
+                if (response.ok) {
+                    const hash = await response.text();
+                    // Display the hash in the <pre> tag
+                    hashDisplay.textContent = `Hash: ${hash}`;
+                } else {
+                    // If there's an error, display an error message
+                    hashDisplay.textContent = "Error calculating the hash!";
+                }
+            } catch (error) {
+                // Handle any network or other errors
+                hashDisplay.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
