@@ -27,11 +27,11 @@ jobs:
           rustup component add clippy
 
       - name: Install dependencies for windows
-        if : ${{ matrix.os }} == 'windows-latest'
+        if: ${{ matrix.os == 'windows-latest'}}  
         run: cargo install --path .
 
       - name: Install dependencies for others
-        if : ${{ matrix.os }} != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest'}}  
         run: cargo build
 
       - name: Lint
@@ -40,7 +40,7 @@ jobs:
           cargo clippy -- -D warnings          
 
       - name: Test
-        if : ${{ matrix.os }} != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest'}}  
         run: |
           cargo check
           cargo test --all          
