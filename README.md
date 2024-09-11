@@ -44,8 +44,20 @@ From CLI run ```cargo run client``` to start client. Then access the functions f
 
 ## 4. Process
 
-1. get the root hash for files to be uploaded from `localhost:8081/hash` path. copy the hash value including the square braces like `[....]` and store it somewhere. this is the `root_hash`
-2. upload the files to the server from `localhost:8080/upload`
-3. view list of file at `localhost:8080/list`. to download click on any file link which will redirect to download page.
-4. download the file, its merkle proof will be displayed as a vector of tuples `[([..],..)]`. Copy this entire expression including the square braces. this is the `merkle_proof`
-5. to verify, go to the client verify page at `localhost:8081/verify` and select the downloaded file and paste the `root_hash` and `merkle_proof` values from previous steps.
+1. Get the root hash for files to be uploaded from `localhost:8081/hash` path. copy the hash value including the square braces like `[....]` and store it somewhere. this is the `root_hash`
+2. Upload the files to the server from `localhost:8080/upload`
+3. View list of file at `localhost:8080/list`. to download click on any file link which will redirect to download page.
+4. Download the file, its merkle proof will be displayed as a vector of tuples `[([..],..)]`. Copy this entire expression including the square braces. this is the `merkle_proof`
+5. To verify, go to the client verify page at `localhost:8081/verify` and select the downloaded file and paste the `root_hash` and `merkle_proof` values from previous steps.
+
+## 5. Caveats
+
+Each time user uploads files to the fileserver, the server deletes the previous files and merkle tree. This is because the user can not regenerate their hash for the set of old+new files. A possible solution to this can be achieved with zero-knowledge proofs. The fileserver will now create a new merkle tree with all files old+new and return not only the root hash of the merkle tree but also a proof of correct computation.
+
+## 6. To Do
+[ ] Add tls support 
+[ ] Add persistent login
+[ ] Multi-user support
+[ ] Deployment in cloud (with Certificate/KMS/Oauth support)
+
+
