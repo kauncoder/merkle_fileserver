@@ -1,19 +1,18 @@
 use std::env;
 use tokio::runtime::Runtime;
+mod cert;
 mod client;
 mod fileserver;
 mod merkletree;
-mod cert;
 
 async fn run_server() {
     // run server
     let _ = fileserver::routes::start_server().await;
-    
 }
 
-async fn run_client(){
-  //run client
-  let _ = client::routes::start_local_server().await;
+async fn run_client() {
+    //run client
+    let _ = client::routes::start_local_server().await;
 }
 
 fn main() {

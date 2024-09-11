@@ -1,4 +1,3 @@
-
 // use warp::Filter;
 // use cookie::{Cookie, CookieJar};
 // use serde::Deserialize;
@@ -15,11 +14,10 @@
 //     password: String,
 // }
 
-
 // // Middleware to check if a user is logged in
 // pub async fn verify_session(sessions: Sessions, cookie_header: Option<String>) -> Result<(), Rejection> {
 //     let cookie_header = cookie_header.unwrap().clone();
-    
+
 //         let mut cookie_jar = CookieJar::new();
 //         let parts: Vec<String> = cookie_header.split(' ').map(|s| s.to_string()).collect();      //  let parts: Vec<String> = cookie_header.split(' ');//.map(|s| s.to_string()).collect();
 //         for cookie in parts {
@@ -28,7 +26,6 @@
 //                 cookie_jar.add_original(cookie.clone());
 //             }
 //         }
-    
 
 //         if let Some(session_cookie) = cookie_jar.get("session") {
 //             let session_id = session_cookie.value();
@@ -37,7 +34,7 @@
 //                 return Ok(());
 //             }
 //         }
-   
+
 //  //  let s = println!("{:?}",cookie_header);
 
 //     // Redirect to login page if session is invalid
