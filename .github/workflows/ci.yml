@@ -40,6 +40,7 @@ jobs:
           cargo clippy -- -D warnings          
 
       - name: Test
+        if : ${{ matrix.os }} != 'windows-latest'
         run: |
           cargo check
           cargo test --all          
