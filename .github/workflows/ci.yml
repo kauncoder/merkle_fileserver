@@ -29,17 +29,14 @@ jobs:
 
       - name: Lint
         run: |
-          cd merkle_fileserver
           cargo fmt -- --check
           cargo clippy -- -D warnings          
 
       - name: Test
         run: |
-          cd merkle_fileserver
           cargo check
           cargo test --all          
 
       - name: Build
         run: |
-          cd merkle_fileserver
           cargo build --release
