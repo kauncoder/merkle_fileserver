@@ -26,9 +26,11 @@ jobs:
           rustup update
           rustup component add clippy
 
-      - name: Install dependencies
+      - name: Install dependencies for windows
         if : ${{ matrix.os }} == 'windows-latest'
         run: cargo install --path .
+
+      - name: Install dependencies for others
         if : ${{ matrix.os }} != 'windows-latest'
         run: cargo build
 
