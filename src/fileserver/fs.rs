@@ -42,7 +42,7 @@ pub async fn handle_file_upload(
     //clear old db entries before adding new ones
     let _ = clear_db(db.clone());
     //build merkle tree for the entire upload folder
-    let file_hash_map = get_file_list();
+    let file_hash_map = get_file_list(UPLOAD_DIR);
     FastMerkleTree::build_merkle_tree(db, file_hash_map);
     Ok(StatusCode::OK)
 }
@@ -96,9 +96,9 @@ pub async fn list_files_handler() -> Result<impl Reply, Rejection> {
     Ok(warp::reply::json(&files))
 }
 
-fn get_file_list() -> Vec<String> {
+pub fn get_file_list(upload_dir: &str) -> Vec<String> {
     let mut file_list: Vec<String> = Vec::new(); //replace with more concrete type
-    let dir_path = format!("./{}", UPLOAD_DIR);
+    let dir_path = format!("./{}", upload_dir);
     let dir = Path::new(&dir_path);
     let entries = fs::read_dir(dir).unwrap();
     for entry in entries {

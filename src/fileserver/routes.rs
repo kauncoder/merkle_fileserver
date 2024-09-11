@@ -21,7 +21,7 @@ pub async fn start_server() {
     let upload_route = warp::path("upload")
         .and(db_filter.clone())
         .and(warp::post())
-        .and(warp::multipart::form().max_length(10_000_000))
+        .and(warp::multipart::form().max_length(100_000_000))
         .and_then(handle_file_upload);
 
     let download_route = warp::path("download")
