@@ -80,6 +80,7 @@ pub async fn handle_file_download(
 }
 
 // Handler to list files
+#[allow(clippy::manual_flatten)]
 pub async fn list_files_handler() -> Result<impl Reply, Rejection> {
     // Read directory contents
     let mut files = vec![];
