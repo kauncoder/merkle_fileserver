@@ -52,12 +52,13 @@ From CLI run ```cargo run client``` to start client. Then access the functions f
 
 ## 5. Caveats
 
-Each time user uploads files to the fileserver, the server deletes the previous files and merkle tree. This is because the user can not regenerate their hash for the set of old+new files. A possible solution to this can be achieved with zero-knowledge proofs. The fileserver will now create a new merkle tree with all files old+new and return not only the root hash of the merkle tree but also a proof of correct computation.
+Each time user uploads files to the fileserver, the server deletes the previous files and merkle tree. This is because the user can not regenerate their hash for the set of old+new files (a possible solution to this can be achieved with zero-knowledge proofs where fileserver will create a new merkle tree with all files old+new and return not only the root hash of the new merkle tree but also a proof of correct computation).
 
 ## 6. To Do
-[ ] Add tls support 
-[ ] Add persistent login
-[ ] Multi-user support
-[ ] Deployment in cloud (with Certificate/KMS/Oauth support)
 
+- [ ] Add tls support 
+- [ ] Add persistent login
+- [ ] Multi-user support
+- [ ] Deployment in cloud (with Certificate/KMS/Oauth support)
+- [ ] Support dynamic SNARK proofs
 
