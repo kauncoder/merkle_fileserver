@@ -106,7 +106,7 @@ pub fn get_file_list(upload_dir: &str) -> Vec<String> {
         let path = entry.unwrap().path();
         file_list.push(path.display().to_string())
     }
-    let _ = file_list.sort_by(|a, b| a.cmp(b));
+    file_list.sort();
     file_list
 }
 
