@@ -7,24 +7,25 @@ on:
     branches:
       - master
 
+
 jobs:
 
-  test:
+  build:
   name: merkle_fileserver tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  
+  strategy:
+    matrix:
+      os: [ubuntu-latest, windows-latest, macos-14]
+
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Update local toolchain
         run: |
           rustup update
           rustup component add clippy
-          rustup install nightly          
 
       - name: Toolchain info
         run: |
@@ -47,4 +48,4 @@ jobs:
       - name: Build
         run: |
           cd merkle_fileserver
-          cargo build --release 
+          cargo build --release
