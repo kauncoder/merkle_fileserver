@@ -80,7 +80,6 @@ pub async fn handle_file_download(
 }
 
 // Handler to list files
-#[allow(clippy::manual_flatten)]
 pub async fn list_files_handler() -> Result<impl Reply, Rejection> {
     // Read directory contents
     let mut files = vec![];
@@ -114,7 +113,6 @@ fn clear_db(db: Arc<sled::Db>) -> Result<()> {
         let (key, _) = result?;
         db.remove(key)?;
     }
-    //   db.flush()?;
     Ok(())
 }
 

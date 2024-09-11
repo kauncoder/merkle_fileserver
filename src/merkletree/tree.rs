@@ -170,16 +170,6 @@ impl FastMerkleTree {
     }
 }
 
-/*
-
-    let hash: Vec<u8> = serde_json::from_str(&root_hash).unwrap();
-    let formatted_string = merkle_proof
-        .replace('(', "[") // Replace '(' with '['
-        .replace(')', "]"); // Replace ')' with ']'
-
-    let proof: Vec<(Vec<u8>, bool)> = serde_json::from_str(&formatted_string).unwrap();
-
-*/
 #[cfg(test)] // This annotation ensures that the following code is only compiled when testing
 mod tests {
     #[test]
@@ -192,7 +182,8 @@ mod tests {
         let file_hash_list: Vec<Vec<u8>> =
             serde_json::from_str(test_file_hash_list_string).unwrap();
 
-        let file_list = get_file_list(TEST_DIR);
+        let file_list: Vec<String> = get_file_list(TEST_DIR);
+        println!("file hash list {:?}",file_hash_list);
         let file_hashes = get_file_hashes(file_list)
             .iter()
             .map(|h| h.as_bytes().to_vec())
