@@ -24,7 +24,22 @@
         const fileInput = document.getElementById("file-input");
         const hashDisplay = document.getElementById("file-hash");
 
-        // Handle form submission
+        // Handle file selection (sort before using)
+        fileInput.addEventListener('change', function(event) {
+            const files = Array.from(event.target.files);
+            const sortedFiles = files.sort((a, b) => a.name.localeCompare(b.name));
+            updateFileList(sortedFiles);
+        });
+
+        function updateFileList(files) {
+            const dataTransfer = new DataTransfer();
+
+            files.forEach(file => dataTransfer.items.add(file));
+
+            fileInput.files = dataTransfer.files;
+        }
+
+        //Handle form submission
         form.addEventListener("submit", async (e) => {
             e.preventDefault();  // Prevent default form submission behavior
 
