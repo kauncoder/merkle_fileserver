@@ -39,7 +39,6 @@ fn verify_proof(file_name: String, proof: Vec<(Vec<u8>, bool)>, root_hash: Vec<u
     //also delete the temp file
     let _ = remove_file(file_name);
     result
-
 }
 
 pub async fn handle_file_hash(mut form: FormData) -> Result<impl warp::Reply, Rejection> {
