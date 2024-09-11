@@ -11,7 +11,12 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
@@ -21,11 +26,13 @@ jobs:
           rustup update
           rustup component add clippy
 
-      - name: Toolchain info
+      - name: Install dependencies
         run: |
-          cargo --version --verbose
-          rustc --version
-          cargo clippy --version          
+          if [[ ${{ matrix.os }} == 'windows-latest' ]]; then
+            cargo install --path .
+          else
+            cargo build
+          fi
 
       - name: Lint
         run: |
