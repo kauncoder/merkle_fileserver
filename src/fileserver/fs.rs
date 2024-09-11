@@ -42,8 +42,8 @@ pub async fn handle_file_upload(
     //clear old db entries before adding new ones
     let _ = clear_db(db.clone());
     //build merkle tree for the entire upload folder
-    let file_hash_map = get_file_list(UPLOAD_DIR);
-    FastMerkleTree::build_merkle_tree(db, file_hash_map);
+    let file_list = get_file_list(UPLOAD_DIR);
+    FastMerkleTree::build_merkle_tree(db, file_list);
     Ok(StatusCode::OK)
 }
 
@@ -106,6 +106,7 @@ pub fn get_file_list(upload_dir: &str) -> Vec<String> {
         let path = entry.unwrap().path();
         file_list.push(path.display().to_string())
     }
+    let _= file_list.sort_by(|a, b| a.cmp(b));
     file_list
 }
 

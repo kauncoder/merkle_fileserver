@@ -1,6 +1,6 @@
 use crate::merkletree::tree::{FastMerkleTree, OFFSET_ONE, OFFSET_TWO};
 use blake3::Hash;
-use std::path::PathBuf;
+use std::{fs::remove_file, path::PathBuf};
 use warp::filters::multipart::FormData;
 use warp::reject::Rejection;
 
@@ -12,7 +12,7 @@ use warp::{self, Buf};
 
 fn verify_proof(file_name: String, proof: Vec<(Vec<u8>, bool)>, root_hash: Vec<u8>) -> bool {
     //convert proof to vector of hashes
-    let filepath = PathBuf::from(file_name);
+    let filepath = PathBuf::from(&file_name);
     if !filepath.exists() {
         return false;
     }
@@ -35,7 +35,11 @@ fn verify_proof(file_name: String, proof: Vec<(Vec<u8>, bool)>, root_hash: Vec<u
         }
         current_hash = *hasher.finalize().as_bytes();
     }
-    current_hash.to_vec() == root_hash
+    let result = current_hash.to_vec() == root_hash;
+    //also delete the temp file
+    let _ = remove_file(file_name);
+    result
+
 }
 
 pub async fn handle_file_hash(mut form: FormData) -> Result<impl warp::Reply, Rejection> {
