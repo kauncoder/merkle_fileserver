@@ -26,7 +26,7 @@ fn main() {
 
     match args[1].as_str() {
         "server" => {
-            println!("Running the server on port 8080...");
+            println!("Running the https server on port 8080...");
             rt.block_on(run_server());
         }
         "client" => {

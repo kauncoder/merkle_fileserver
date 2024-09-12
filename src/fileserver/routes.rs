@@ -43,7 +43,12 @@ pub async fn start_server() {
         .or(upload_route)
         .or(download_page)
         .or(download_route);
-    // Start the server
 
-    warp::serve(routes).run(([127, 0, 0, 1], 8080)).await;
+    // Start the server with TLS
+    warp::serve(routes)
+        .tls()
+        .cert_path("./demo_certs/cert.pem")
+        .key_path("./demo_certs/key.pem")
+        .run(([127, 0, 0, 1], 8080))
+        .await;
 }
